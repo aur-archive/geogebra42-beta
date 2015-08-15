@@ -1,0 +1,80 @@
+*** geogebra-old	2012-03-20 18:48:54.000000000 +0100
+--- geogebra	2012-03-20 23:34:20.185434057 +0100
+***************
+*** 6,20 ****
+  #---------------------------------------------
+  # Used environment variables:
+  #
+- # GG_SCRIPTNAME=<name of originally called script to start GeoGebra> # If unset, name of this script will be used.
+- #
+- # GG_PATH=<path of directory containing geogebra.jar> # If unset, path of this script will be used.
+- # In this case if the path of script does not contain the geogebra.jar file, /usr/share/geogebra will be used.
+- #
+  # GG_CONFIG_PATH=<path of directory containing .config/$GG_SCRIPTNAME/geogebra.conf> # If unset, $HOME will be used.
+  #
+- # JAVACMD=<Java command> # If unset, java will be used.
+- #
+  # GG_XMS=<initial Java heap size> # If unset, 32m will be used.
+  #
+  # GG_XMX=<maximum Java heap size> # If unset, 512m will be used.
+--- 6,13 ----
+***************
+*** 22,51 ****
+  # GG_DJAVA_LIBRARY_PATH=<native library path>
+  
+  #---------------------------------------------
+- # If $GG_SCRIPTNAME not set, use name of this script.
+- 
+- if [ -z "$GG_SCRIPTNAME" ]; then
+- 	GG_SCRIPTNAME="$(basename $0)"
+- fi
+- 
+- #---------------------------------------------
+- # If $GG_PATH not set, use path of this script.
+- 
+- if [ -z "$GG_PATH" ]; then
+- 	GG_PATH="${BASH_SOURCE[0]}"
+- 	if [ -h "${GG_PATH}" ]; then
+- 		while [ -h "${GG_PATH}" ]; do
+- 			GG_PATH=`readlink "${GG_PATH}"`
+- 		done
+- 	fi
+- 	pushd . > /dev/null
+- 	cd `dirname ${GG_PATH}` > /dev/null
+- 	GG_PATH=`pwd`
+- 	popd > /dev/null
+- 	test -r "${GG_PATH}/geogebra.jar" || GG_PATH='/usr/share/geogebra'
+- fi
+- 
+- #---------------------------------------------
+  # If $GG_CONFIG_PATH not set, use $HOME.
+  
+  if [ -z "$GG_CONFIG_PATH" ]; then
+--- 15,20 ----
+***************
+*** 53,65 ****
+  fi
+  
+  #---------------------------------------------
+- # If $JAVACMD not set, use java.
+- 
+- if [ -z "$JAVACMD" ]; then
+- 	JAVACMD='java'
+- fi
+- 
+- #---------------------------------------------
+  # If $GG_XMS not set, use 32m.
+  
+  if [ -z "$GG_XMS" ]; then
+--- 22,27 ----
+***************
+*** 209,212 ****
+  #---------------------------------------------
+  # Run
+  
+! exec "$JAVACMD" "${JAVA_OPTS[@]}" -jar "$GG_PATH/geogebra.jar" "${GG_OPTS[@]}" "$@"
+--- 171,174 ----
+  #---------------------------------------------
+  # Run
+  
+! exec java "${JAVA_OPTS[@]}" -jar "/usr/share/java/geogebra42-beta/geogebra.jar" "${GG_OPTS[@]}" "$@"
